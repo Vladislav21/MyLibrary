@@ -1,6 +1,7 @@
 package Library.View;
 
 import Library.Controller.BookController;
+import Library.Interfaces.Book;
 import Library.Model.Author;
 import Library.Model.MyExceptions.Empty;
 import Library.Model.MyExceptions.Samedata;
@@ -10,53 +11,68 @@ import Library.Model.MyExceptions.WrongSymbols;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ViewBooks {
 
     private BookController controller;
-    private Scanner in;
+    Scanner in = new Scanner(System.in);
+
 
     public ViewBooks() {
-
         controller = new BookController();
-        in = new Scanner(System.in);
     }
 
     public void start() { // обработать try catch
         try {
             initialDataLibrary();
-            controller.saveData();
             controller.readData();
         } catch (Exception e) {
-            System.err.println("Не удалось получить данные из библиотеки");
+            System.err.println("Не удалось получить данных из библиотеки");
         }
         boolean flag = true;
         while (flag) {
             int choice = 0;
             Menu();
-            choice = in.nextInt();
             try{
+                choice = in.nextInt();
                 switch (choice) {
                     case 1:
+                        if(controller.getGenreList().isEmpty()){
+                            System.out.println("Список пуст");
+                        }
                         System.out.println(controller.getGenreList());
                         break;
                     case 2:
+                        if(controller.getBookList().isEmpty()){
+                            System.out.println("Список пуст");
+                        }
                         System.out.println(controller.getBookList());
                         break;
                     case 3:
                         System.out.println("Хотите получить список книг?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
-                        int key = in.nextInt();
+                            int key = in.nextInt();
                         if (key == 1) {
+                            if(controller.getBookList().isEmpty()){
+                                System.out.println("Список пуст");
+                            }
                             System.out.println(controller.getBookList());
                             System.out.println("Введите ID книги:");
                             int ID = in.nextInt();
-                            controller.deleteBookbyID(ID);
+                            if(controller.deleteBookbyID(ID)){
+                                System.out.println("Книга удалена");
+                            }
+                            System.out.println("Книги с таким ID не найдено");
+
                         }
                         if (key == 2) {
                             System.out.println("Введите ID книги:");
                             int ID = in.nextInt();
-                            controller.deleteBookbyID(ID);
+                            if(controller.deleteBookbyID(ID)){
+                                System.out.println("Книга удалена");
+                            }
+                            System.out.println("Книги с таким ID не найдено");
                         }
                         break;
                     case 4:
@@ -64,27 +80,41 @@ public class ViewBooks {
                         String name = in.next();
                         System.out.println("Введите возраст жанра:");
                         double age = in.nextDouble();
-                        if (controller.addGenre(name, age)) {
-                            System.out.println("Жанр успешно добавлен");
+                        if(controller.addGenre(name, age)){
+                        System.out.println("Жанр успешно добавлен");
                         }
-                        System.err.println("Некорректно введены данные");
+                        else {
+                            System.out.println("Жантр с таким именем уже существует");
+                        }
+
                         break;
                     case 5:
                         System.out.println("Хотите получить список жанров?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
                         int key1 = in.nextInt();
                         if (key1 == 1) {
+                            if(controller.getGenreList().isEmpty()){
+                                System.out.println("Список пуст");
+                            }
                             System.out.println(controller.getGenreList());
                             System.out.println("Введите название жанра, которого хотите удалить:");
                             String namegenre = in.next();
-                            controller.deleteGenre(namegenre);
-                            System.out.println("Удаление жанра произошло успешно");
+                            if(controller.deleteGenre(namegenre)){
+                                System.out.println("Удаление жанра произошло успешно");
+                            }
+                            else {
+                                System.out.println("Жанра с таким именем не найдено");
+                            }
 
                         }
                         if (key1 == 2) {
                             System.out.println("Введите название жанра, которого хотите удалить:");
                             String namegenre = in.next();
-                            controller.deleteGenre(namegenre);
-                            System.out.println("Удаление жанра прошло успешно");
+                            if(controller.deleteGenre(namegenre)){
+                                System.out.println("Удаление жанра произошло успешно");
+                            }
+                            else {
+                                System.out.println("Жанра с таким именем не найдено");
+                            }
                         }
                         break;
                     case 6:
@@ -122,7 +152,12 @@ public class ViewBooks {
                     case 7:
                         System.out.println("Введите название книги, которое хотите получить:");
                         String nameBook = in.next();
-                        controller.getBookbyName(nameBook);
+                        if(controller.getBookbyName(nameBook)){
+                            System.out.println("Ваша книга упешно найдена");
+                        }
+                        else{
+                            System.out.println("Книги с таким названием не существует, попробуйте поиск по буквам");
+                        }
                         break;
                     case 8:
                         System.out.println(controller.getAuthors());
@@ -143,8 +178,11 @@ public class ViewBooks {
                         break;
                     default:
                         System.out.println("Функции с таким номером не существует, пожалуйста введите заного номер функции");
-                }}catch (Exception e){
-                System.err.println("Ошибка с вводом данных, попробуйте еще раз");
+                        break;
+                 }}catch(Exception e){
+                System.err.println("Неверный тип данных, попробуйте еще раз");
+               Scanner newin = new Scanner(System.in); // разобрать
+               in = newin;
             }
         }
     }

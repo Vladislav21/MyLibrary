@@ -69,18 +69,18 @@ public class BookController {
     }
 
 
-    public boolean deleteBookbyID(int ID) throws WrongSymbols {
+    public boolean deleteBookbyID(int ID) {
         for (Book book : libraryBook.getBooks()) {
             if (book.getID() == ID) {
                 libraryBook.getBooks().remove(book);
                 return true;
             }
         }
-        throw new WrongSymbols();
+        return false;
     }
 
 
-    public boolean addGenre(String genreName, double age) throws Samedata {
+    public boolean addGenre(String genreName, double age) {
         Genre genre = new Genre();
         genre.setName(genreName);
         genre.setAge(age);
@@ -88,7 +88,7 @@ public class BookController {
         genre.setID_GENRE(IDgenre);
         for (Genre oldGenre : libraryBook.getGenres()) {
             if (oldGenre.equals(genre)) {
-                throw new Samedata();
+                return false;
             }
         }
         libraryBook.getGenres().add(genre);
@@ -105,14 +105,14 @@ public class BookController {
     }
 
 
-    public boolean deleteGenre(String name) throws WrongName {
+    public boolean deleteGenre(String name) {
         for (Genre genre : libraryBook.getGenres()) {
             if (genre.getName().equals(name)) {
                 libraryBook.getGenres().remove(genre);
                 return true;
             }
         }
-        throw new WrongName();
+       return false;
     }
 
 
@@ -156,12 +156,14 @@ public class BookController {
         return str;
     }
 
-    public void getBookbyName(String name) throws WrongName{
+    public boolean getBookbyName(String name) throws WrongName{
         for(Book book: libraryBook.getBooks()){
             if(book.getName().equals(name)){
                 System.out.println(book);
+                return true;
             }
         }
+        return false;
     }
 
     public Author getAuthor(String str){

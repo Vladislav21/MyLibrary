@@ -17,8 +17,6 @@ import java.util.Scanner;
 public class ViewBooks {
 
     private BookController controller;
-    Scanner in = new Scanner(System.in);
-
 
     public ViewBooks() {
         controller = new BookController();
@@ -33,159 +31,158 @@ public class ViewBooks {
         }
         boolean flag = true;
         while (flag) {
-            int choice = 0;
             Menu();
-            try{
-                choice = in.nextInt();
-                switch (choice) {
-                    case 1:
-                        if(controller.getGenreList().isEmpty()){
-                            System.out.println("Список пуст");
-                        }
-                        System.out.println(controller.getGenreList());
-                        break;
-                    case 2:
-                        if(controller.getBookList().isEmpty()){
-                            System.out.println("Список пуст");
-                        }
-                        System.out.println(controller.getBookList());
-                        break;
-                    case 3:
-                        System.out.println("Хотите получить список книг?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
-                            int key = in.nextInt();
-                        if (key == 1) {
-                            if(controller.getBookList().isEmpty()){
-                                System.out.println("Список пуст");
-                            }
-                            System.out.println(controller.getBookList());
-                            System.out.println("Введите ID книги:");
-                            int ID = in.nextInt();
-                            if(controller.deleteBookbyID(ID)){
-                                System.out.println("Книга удалена");
-                            }
-                            System.out.println("Книги с таким ID не найдено");
-
-                        }
-                        if (key == 2) {
-                            System.out.println("Введите ID книги:");
-                            int ID = in.nextInt();
-                            if(controller.deleteBookbyID(ID)){
-                                System.out.println("Книга удалена");
-                            }
-                            System.out.println("Книги с таким ID не найдено");
-                        }
-                        break;
-                    case 4:
-                        System.out.println("Введите название жанра, которого хотите добавить:");
-                        String name = in.next();
-                        System.out.println("Введите возраст жанра:");
-                        double age = in.nextDouble();
-                        if(controller.addGenre(name, age)){
-                        System.out.println("Жанр успешно добавлен");
-                        }
-                        else {
-                            System.out.println("Жантр с таким именем уже существует");
-                        }
-
-                        break;
-                    case 5:
-                        System.out.println("Хотите получить список жанров?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
-                        int key1 = in.nextInt();
-                        if (key1 == 1) {
-                            if(controller.getGenreList().isEmpty()){
+            try {
+                Scanner in = new Scanner(System.in);
+                try {
+                    int choice = in.nextInt();
+                    switch (choice) {
+                        case 1:
+                            if (controller.getGenreList().isEmpty()) {
                                 System.out.println("Список пуст");
                             }
                             System.out.println(controller.getGenreList());
-                            System.out.println("Введите название жанра, которого хотите удалить:");
-                            String namegenre = in.next();
-                            if(controller.deleteGenre(namegenre)){
-                                System.out.println("Удаление жанра произошло успешно");
+                            break;
+                        case 2:
+                            if (controller.getBookList().isEmpty()) {
+                                System.out.println("Список пуст");
                             }
-                            else {
-                                System.out.println("Жанра с таким именем не найдено");
+                            System.out.println(controller.getBookList());
+                            break;
+                        case 3:
+                            System.out.println("Хотите получить список книг?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
+                            int key = in.nextInt();
+                            if (key == 1) {
+                                if (controller.getBookList().isEmpty()) {
+                                    System.out.println("Список пуст");
+                                }
+                                System.out.println(controller.getBookList());
+                                System.out.println("Введите ID книги:");
+                                int ID = in.nextInt();
+                                if (controller.deleteBookbyID(ID)) {
+                                    System.out.println("Книга удалена");
+                                }
+                                System.out.println("Книги с таким ID не найдено");
+
+                            }
+                            if (key == 2) {
+                                System.out.println("Введите ID книги:");
+                                int ID = in.nextInt();
+                                if (controller.deleteBookbyID(ID)) {
+                                    System.out.println("Книга удалена");
+                                }
+                                System.out.println("Книги с таким ID не найдено");
+                            }
+                            break;
+                        case 4:
+                            System.out.println("Введите название жанра, которого хотите добавить:");
+                            String name = in.next();
+                            System.out.println("Введите возраст жанра:");
+                            double age = in.nextDouble();
+                            if (controller.addGenre(name, age)) {
+                                System.out.println("Жанр успешно добавлен");
+                            } else {
+                                System.out.println("Жантр с таким именем уже существует");
                             }
 
-                        }
-                        if (key1 == 2) {
-                            System.out.println("Введите название жанра, которого хотите удалить:");
-                            String namegenre = in.next();
-                            if(controller.deleteGenre(namegenre)){
-                                System.out.println("Удаление жанра произошло успешно");
+                            break;
+                        case 5:
+                            System.out.println("Хотите получить список жанров?" + "\n" + "1 - ДА" + "\n" + "2 - НЕТ");
+                            int key1 = in.nextInt();
+                            if (key1 == 1) {
+                                if (controller.getGenreList().isEmpty()) {
+                                    System.out.println("Список пуст");
+                                }
+                                System.out.println(controller.getGenreList());
+                                System.out.println("Введите название жанра, которого хотите удалить:");
+                                String namegenre = in.next();
+                                if (controller.deleteGenre(namegenre)) {
+                                    System.out.println("Удаление жанра произошло успешно");
+                                } else {
+                                    System.out.println("Жанра с таким именем не найдено");
+                                }
+
                             }
-                            else {
-                                System.out.println("Жанра с таким именем не найдено");
+                            if (key1 == 2) {
+                                System.out.println("Введите название жанра, которого хотите удалить:");
+                                String namegenre = in.next();
+                                if (controller.deleteGenre(namegenre)) {
+                                    System.out.println("Удаление жанра произошло успешно");
+                                } else {
+                                    System.out.println("Жанра с таким именем не найдено");
+                                }
                             }
-                        }
-                        break;
-                    case 6:
-                        System.out.println("Нажмите 1: если хотите добавить аудиокнигу;\nНажмите 2: если хотите добавить текстовую книгу");
-                        int i = in.nextInt();
-                        if (i == 1) {
-                            System.out.println("Введите название книги:");
-                            String namebook = in.next();
-                            System.out.println("Введите автора книги:");
-                            String authorbook = in.next();
-                            System.out.println("Введите ID жанра, который соответствует книге:");
-                            int genreID = in.nextInt();
-                            System.out.println("Введите длительность книги в минутах:");
-                            double duractionBook = in.nextDouble();
-                            System.out.println("Введите размер книги в MB:");
-                            double size = in.nextDouble();
-                            if (controller.addBookAudio(namebook, controller.getAuthor(authorbook), genreID, duractionBook, size)) {
-                                System.out.println("Книга успешно добавлена");
+                            break;
+                        case 6:
+                            System.out.println("Нажмите 1: если хотите добавить аудиокнигу;\nНажмите 2: если хотите добавить текстовую книгу");
+                            int i = in.nextInt();
+                            if (i == 1) {
+                                System.out.println("Введите название книги:");
+                                String namebook = in.next();
+                                System.out.println("Введите автора книги:");
+                                String authorbook = in.next();
+                                System.out.println("Введите ID жанра, который соответствует книге:");
+                                int genreID = in.nextInt();
+                                System.out.println("Введите длительность книги в минутах:");
+                                double duractionBook = in.nextDouble();
+                                System.out.println("Введите размер книги в MB:");
+                                double size = in.nextDouble();
+                                if (controller.addBookAudio(namebook, controller.getAuthor(authorbook), genreID, duractionBook, size)) {
+                                    System.out.println("Книга успешно добавлена");
+                                }
                             }
-                        }
-                        if (i == 2) {
-                            System.out.println("Введите название книги:");
-                            String namebook = in.next();
-                            System.out.println("Введите автора книги:");
-                            String authorbook = in.next();
-                            System.out.println("Введите ID жанра, который соответствует книге:");
-                            int genreID = in.nextInt();
-                            System.out.println("Введите количество страниц книги:");
-                            int pages = in.nextInt();
-                            if (controller.addBookText(namebook, controller.getAuthor(authorbook), genreID, pages)) {
-                                System.out.println("Книга успешно добавлена");
+                            if (i == 2) {
+                                System.out.println("Введите название книги:");
+                                String namebook = in.next();
+                                System.out.println("Введите автора книги:");
+                                String authorbook = in.next();
+                                System.out.println("Введите ID жанра, который соответствует книге:");
+                                int genreID = in.nextInt();
+                                System.out.println("Введите количество страниц книги:");
+                                int pages = in.nextInt();
+                                if (controller.addBookText(namebook, controller.getAuthor(authorbook), genreID, pages)) {
+                                    System.out.println("Книга успешно добавлена");
+                                }
                             }
-                        }
-                        break;
-                    case 7:
-                        System.out.println("Введите название книги, которое хотите получить:");
-                        String nameBook = in.next();
-                        if(controller.getBookbyName(nameBook)){
-                            System.out.println("Ваша книга упешно найдена");
-                        }
-                        else{
-                            System.out.println("Книги с таким названием не существует, попробуйте поиск по буквам");
-                        }
-                        break;
-                    case 8:
-                        System.out.println(controller.getAuthors());
-                        break;
-                    case 9:
-                        System.out.println("Введите название книги для поиска по буквам:");
-                        String nameBook1 = in.next();
-                        if (controller.researchBooks(nameBook1).isEmpty()) {
-                            System.err.println("Поиск не дал результатов");
-                        } else {
-                            System.out.println(controller.researchBooks(nameBook1));
-                        }
-                        break;
-                    case 10:
-                        System.out.println("Всего доброго, мы ждем вас сного");
-                        flag = false;
-                        controller.saveData();
-                        break;
-                    default:
-                        System.out.println("Функции с таким номером не существует, пожалуйста введите заного номер функции");
-                        break;
-                 }}catch(Exception e){
-                System.err.println("Неверный тип данных, попробуйте еще раз");
-               Scanner newin = new Scanner(System.in); // разобрать
-               in = newin;
-            }
+                            break;
+                        case 7:
+                            System.out.println("Введите название книги, которое хотите получить:");
+                            String nameBook = in.next();
+                            if (controller.getBookbyName(nameBook)) {
+                                System.out.println("Ваша книга упешно найдена");
+                            } else {
+                                System.out.println("Книги с таким названием не существует, попробуйте поиск по буквам");
+                            }
+                            break;
+                        case 8:
+                            System.out.println(controller.getAuthors());
+                            break;
+                        case 9:
+                            System.out.println("Введите название книги для поиска по буквам:");
+                            String nameBook1 = in.next();
+                            if (controller.researchBooks(nameBook1).isEmpty()) {
+                                System.out.println("Поиск не дал результатов");
+                            } else {
+                                System.out.println(controller.researchBooks(nameBook1));
+                            }
+                            break;
+                        case 10:
+                            System.out.println("Всего доброго, мы ждем вас сного");
+                            flag = false;
+                            controller.saveData();
+                            break;
+                        default:
+                            System.out.println("Функции с таким номером не существует, пожалуйста введите заного номер функции");
+                            break;
+                    }
+                }
+                catch (Exception e) {
+                    System.err.println("Неверный тип данных, попробуйте еще раз");
+                }
+           } catch (Exception e) {
+              System.out.println("Неверный тип данных, попробуйте еще раз");}
+          }
         }
-    }
 
     public void initialDataLibrary() throws Samedata, WrongSymbols {
 
@@ -218,9 +215,7 @@ public class ViewBooks {
         controller.addBookText("Почемучка", controller.getAuthor("Кремнев"), 8, 28);
         controller.addBookText("Планета", controller.getAuthor("Зубенко"), 8, 25);
         controller.addBookText("Светильник", controller.getAuthor("Капустин"), 1, 29);
-
     }
-
 
     public void Menu() {
         System.out.println("Добро пожаловать гость, в электронную библиотеку! Выберите действие, которое хотите совершить: ");

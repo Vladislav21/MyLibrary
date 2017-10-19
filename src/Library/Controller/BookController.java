@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class BookController {
@@ -40,20 +43,18 @@ public class BookController {
     public String researchBooks(String name) {
         pattern = Pattern.compile(name);
         String findbook = new String();
-        for (Book book: libraryBook.getBooks()){
+        for (Book book : libraryBook.getBooks()) {
             matcher = pattern.matcher(book.getName());
-            if (matcher.find()){
-                if(book.BookisAudio()){
-                    findbook+=((AudioBook)book).toString();
-                }
-                else
-                    findbook+=((TextBook)book).toString();
+            if (matcher.find()) {
+                if (book.BookisAudio()) {
+                    findbook += ((AudioBook) book).toString();
+                } else
+                    findbook += ((TextBook) book).toString();
             }
 
         }
         return findbook;
     }
-
 
 
     public String getGenreList() throws Empty {
@@ -112,7 +113,7 @@ public class BookController {
                 return true;
             }
         }
-       return false;
+        return false;
     }
 
 
@@ -148,17 +149,30 @@ public class BookController {
         ois.close();
     }
 
-    public String getAuthors(){
+    public String getAuthors() {
+
+       List<String> a = libraryBook.getBooks().stream()
+                .map(book -> book.getAuthor().getName())
+                .filter(s -> !s.isEmpty())
+                .distinct().collect(toList());
+
+
         String str = new String();
+        for (String author : a) {
+            str += "\n" + author;
+        }
+        return str;
+
+        /*String str = new String();
         for(Book book: libraryBook.getBooks()){
             str +="\n"+book.getAuthor();
         }
-        return str;
+        return str;*/
     }
 
-    public boolean getBookbyName(String name) throws WrongName{
-        for(Book book: libraryBook.getBooks()){
-            if(book.getName().equals(name)){
+    public boolean getBookbyName(String name) throws WrongName {
+        for (Book book : libraryBook.getBooks()) {
+            if (book.getName().equals(name)) {
                 System.out.println(book);
                 return true;
             }
@@ -166,7 +180,7 @@ public class BookController {
         return false;
     }
 
-    public Author getAuthor(String str){
+    public Author getAuthor(String str) {
         return new Author(str);
     }
 }

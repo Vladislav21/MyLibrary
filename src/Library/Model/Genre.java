@@ -64,6 +64,6 @@ public class Genre implements Serializable {
 
     @Override
     public String toString() {
-        return "Жанр:" + name + ", Возраст жанра:" + age + ", ID жанра:" + ID_GENRE + "\n";
+        return "Жанр:" + name + ", Возраст жанра:" + age +" лет" +", ID жанра:" + ID_GENRE + "\n";
     }
 }

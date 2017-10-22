@@ -160,6 +160,10 @@ public class ViewBooks {
                             }
                             break;
                         case 10:
+                            System.out.println("Возраста жанров в библиотеке по возрастанию(лет):");
+                            System.out.println(controller.getAgeGenreList());
+                            break;
+                        case 11:
                             System.out.println("Всего доброго, мы ждем вас сного");
                             flag = false;
                             controller.saveData();
@@ -224,6 +228,7 @@ public class ViewBooks {
         System.out.println("7 - Получить книгу по названию");
         System.out.println("8 - Получить список авторов");
         System.out.println("9 - Поиск книги по буквам в названии");
-        System.out.println("10 - Выход");
+        System.out.println("10 - Получить список возрастов жанров по возрастанию");
+        System.out.println("11 - Выход");
     }
 }

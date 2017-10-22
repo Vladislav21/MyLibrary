@@ -7,6 +7,7 @@ import Library.Model.MyExceptions.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,6 +63,12 @@ public class BookController {
         return str;
     }
 
+
+    public List<Double> getAgeGenreList() throws Empty {
+        List<Double> ageGenres = libraryBook.getGenres().stream().map(genre -> genre.getAge()).sorted().distinct().collect(toList());
+        return ageGenres;
+    }
+
     public List<Book> getBookList() throws Empty {
         return libraryBook.getBooks();
     }
@@ -93,7 +100,7 @@ public class BookController {
         return true;
     }
 
-    public Genre getGenrebyID(int IDgenre) throws WrongSymbols {
+   public Genre getGenrebyID(int IDgenre) throws WrongSymbols {
         for (Genre genre : libraryBook.getGenres()) {
             if (genre.getID() == IDgenre) {
                 return genre;
@@ -101,6 +108,7 @@ public class BookController {
         }
         throw new WrongSymbols();
     }
+
 
 
 //    public boolean deleteGenre(String name) {
@@ -172,7 +180,7 @@ public class BookController {
             str +="\n"+book.getAuthor();
         }
         return str;*/
-  //  }
+    //  }
 
     public boolean getBookbyName(String name) throws WrongName {
         for (Book book : libraryBook.getBooks()) {
@@ -188,17 +196,18 @@ public class BookController {
         return new Author(str);
     }
 
-    public String getAuthors(){
+    public String getAuthors() {
         List<String> u = libraryBook.getBooks().stream().map(author -> author.getAuthor().getName()).distinct().collect(toList());
         String str = new String();
 
-        for(String author: u){
-            str +="\n"+author;
+        for (String author : u) {
+            str += "\n" + author;
         }
         return str;
     }
-
 }
+
+
 
 
 

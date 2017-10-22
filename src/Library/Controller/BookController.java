@@ -3,10 +3,7 @@ package Library.Controller;
 import Library.Interfaces.AbstractFabric;
 import Library.Interfaces.Book;
 import Library.Model.*;
-import Library.Model.MyExceptions.Empty;
-import Library.Model.MyExceptions.Samedata;
-import Library.Model.MyExceptions.WrongName;
-import Library.Model.MyExceptions.WrongSymbols;
+import Library.Model.MyExceptions.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -106,14 +103,21 @@ public class BookController {
     }
 
 
-    public boolean deleteGenre(String name) {
-        for (Genre genre : libraryBook.getGenres()) {
-            if (genre.getName().equals(name)) {
-                libraryBook.getGenres().remove(genre);
-                return true;
-            }
-        }
-        return false;
+//    public boolean deleteGenre(String name) {
+//        for (Genre genre : libraryBook.getGenres()) {
+//            if (genre.getName().equals(name)) {
+//                libraryBook.getGenres().remove(genre);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    public void deleteGenre(String name) throws WrongGenre {
+        Genre genretoDelete = libraryBook.getGenres().stream()
+                .filter(genre -> genre.getName().equals(name))
+                .findAny().orElseThrow(WrongGenre::new);
+        libraryBook.getGenres().remove(genretoDelete);
     }
 
 
@@ -149,26 +153,26 @@ public class BookController {
         ois.close();
     }
 
-    public String getAuthors() {
-
-       List<String> a = libraryBook.getBooks().stream()
-                .map(book -> book.getAuthor().getName())
-                .filter(s -> !s.isEmpty())
-                .distinct().collect(toList());
-
-
-        String str = new String();
-        for (String author : a) {
-            str += "\n" + author;
-        }
-        return str;
+//    public String getAuthors() {
+//
+//        List<String> a = libraryBook.getBooks().stream()
+//                .map(book -> book.getAuthor().getName())
+//                .filter(s -> !s.isEmpty())
+//                .distinct().collect(toList());
+//
+//
+//        String str = new String();
+//        for (String author : a) {
+//            str += "\n" + author;
+//        }
+//        return str;
 
         /*String str = new String();
         for(Book book: libraryBook.getBooks()){
             str +="\n"+book.getAuthor();
         }
         return str;*/
-    }
+  //  }
 
     public boolean getBookbyName(String name) throws WrongName {
         for (Book book : libraryBook.getBooks()) {
@@ -183,6 +187,17 @@ public class BookController {
     public Author getAuthor(String str) {
         return new Author(str);
     }
+
+    public String getAuthors(){
+        List<String> u = libraryBook.getBooks().stream().map(author -> author.getAuthor().getName()).distinct().collect(toList());
+        String str = new String();
+
+        for(String author: u){
+            str +="\n"+author;
+        }
+        return str;
+    }
+
 }
 
 

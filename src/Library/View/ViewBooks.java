@@ -3,10 +3,7 @@ package Library.View;
 import Library.Controller.BookController;
 import Library.Interfaces.Book;
 import Library.Model.Author;
-import Library.Model.MyExceptions.Empty;
-import Library.Model.MyExceptions.Samedata;
-import Library.Model.MyExceptions.WrongName;
-import Library.Model.MyExceptions.WrongSymbols;
+import Library.Model.MyExceptions.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,7 +59,8 @@ public class ViewBooks {
                                 if (controller.deleteBookbyID(ID)) {
                                     System.out.println("Книга удалена");
                                 }
-                                System.out.println("Книги с таким ID не найдено");
+                                else{
+                                System.out.println("Книги с таким ID не найдено");}
 
                             }
                             if (key == 2) {
@@ -71,7 +69,8 @@ public class ViewBooks {
                                 if (controller.deleteBookbyID(ID)) {
                                     System.out.println("Книга удалена");
                                 }
-                                System.out.println("Книги с таким ID не найдено");
+                                else{
+                                System.out.println("Книги с таким ID не найдено");}
                             }
                             break;
                         case 4:
@@ -96,21 +95,15 @@ public class ViewBooks {
                                 System.out.println(controller.getGenreList());
                                 System.out.println("Введите название жанра, которого хотите удалить:");
                                 String namegenre = in.next();
-                                if (controller.deleteGenre(namegenre)) {
-                                    System.out.println("Удаление жанра произошло успешно");
-                                } else {
-                                    System.out.println("Жанра с таким именем не найдено");
-                                }
+                                controller.deleteGenre(namegenre);
+                                System.out.println("Удаление жанра произошло успешно");
 
                             }
                             if (key1 == 2) {
                                 System.out.println("Введите название жанра, которого хотите удалить:");
                                 String namegenre = in.next();
-                                if (controller.deleteGenre(namegenre)) {
-                                    System.out.println("Удаление жанра произошло успешно");
-                                } else {
-                                    System.out.println("Жанра с таким именем не найдено");
-                                }
+                                controller.deleteGenre(namegenre);
+                                System.out.println("Удаление жанра произошло успешно");
                             }
                             break;
                         case 6:
@@ -175,6 +168,9 @@ public class ViewBooks {
                             System.out.println("Функции с таким номером не существует, пожалуйста введите заного номер функции");
                             break;
                     }
+                }
+                catch (WrongGenre e){
+                    System.out.println("Такого жанра нет");
                 }
                 catch (Exception e) {
                     System.err.println("Неверный тип данных, попробуйте еще раз");
